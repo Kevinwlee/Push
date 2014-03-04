@@ -21,11 +21,11 @@ PODS:
     - AFNetworking (~> 2.0.0)
 
 DEPENDENCIES:
-  - CarbonBlack (from `https://github.com/chaione/carbon-black-ios`, branch `push`)
+  - CarbonBlack (from `https://github.com/chaione/carbon-black-ios`, branch `rename`)
 
 EXTERNAL SOURCES:
   CarbonBlack:
-    :branch: push
+    :branch: rename
     :git: https://github.com/chaione/carbon-black-ios
 
 SPEC CHECKSUMS:

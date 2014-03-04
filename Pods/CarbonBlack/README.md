@@ -13,8 +13,7 @@ pod 'CarbonBlack', :git => 'https://github.com/chaione/carbon-black-ios', :branc
 			didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
     //Register your client and your app
-    [CarbonBlack registerWithClientId:@"823b8648-2ff8-451d-a653-748d4fff9128" 
-                             andAppId:@"5"];
+    [CarbonBlack registerWithAppId:@"823b8648-2ff8-451d-a653-748d4fff9128"];
 
     return YES;
 }
@@ -25,8 +24,22 @@ pod 'CarbonBlack', :git => 'https://github.com/chaione/carbon-black-ios', :branc
 
 #pragma mark - CCBContextEventManagerDataSource
 
-- (NSDictionary *)payloadForEvent:(NSDictionary *)event {   
+- (NSDictionary *)contextEventMangaer:(CCBContextEventManager *)eventManager payloadForEvent:(NSDictionary *)event {   
     return @{@"first_name":@"Kevin", @"last_name":@"Lee"};
+}
+
+```
+#### Cancel an event
+```objective-c
+
+#pragma mark - CCBContextEventManagerDelegate
+
+- (BOOL)contextEventManager:(CCBContextEventManager *)eventManager shouldPostEvent:(NSDictionary *)event {
+	if(event[@"key"] == @"notImportant") {
+		return NO;
+	} else {
+		return YES;
+	}
 }
 
 ```
@@ -35,13 +48,25 @@ pod 'CarbonBlack', :git => 'https://github.com/chaione/carbon-black-ios', :branc
 ```objective-c
 #pragma mark  - CCBContextEventManagerDelegate
 
-- (void)willPostEvent:(NSDictionary *)event {
+- (void)contextEventManager:(CCBContextEventManager *)eventManager willPostEvent:(NSDictionary *)event {
     NSLog(@"Carbon WILL Post Event %@", event);
 }
 
-- (void)didPostEvent:(NSDictionary *)event {
+- (void)contextEventManager:(CCBContextEventManager *)eventManager didPostEvent:(NSDictionary *)event {
     NSLog(@"Carbon DID Post Event %@", event);
 }
+```
+
+#### Background updates
+Context changes will trigger background pushes to your app.  If you pass the background notification to CarbonBlack, CarbonBlack will update the contextual situation on the device while in the background.
+You must have background pushes enabled in your project, and you must configure your push certificates on ContextHub.
+```objective-c
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+ 		[carbonBlack application:application didReceiveRemoteNotification:userInfo completion:^(UIBackgroundFetchResult) {
+    	completionHandler(completion);
+    }];
+}
+
 ```
 
 ## Resources and Samples

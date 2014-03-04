@@ -1,6 +1,6 @@
 //
 //  CCBVaultItem.h
-//  CarbonBlack
+//  ContextHub
 //
 //  Created by Kevin Lee on 11/1/13.
 //  Copyright (c) 2013 ChaiOne. All rights reserved.
@@ -14,7 +14,7 @@
  from the API responses.  If you set the valutInfo diction to the value of the vault_info key in the response
  it will be easy to update and delete the data in the future.
 */
-@protocol CCBVaultItem <NSObject>
+@protocol CCHVaultItem <NSObject>
 
 /**
  the name of the container that you want to store your object in.  This is usually the class name. ie Employee

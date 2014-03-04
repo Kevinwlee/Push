@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CarbonBlack.h"
-#import "CCBNotificationService.h"
+#import "ContextHub.h"
+#import "CCHNotificationService.h"
+#import "CCHContextEventManager.h"
 
-@interface CCBAppDelegate : UIResponder <UIApplicationDelegate>
+@interface CCBAppDelegate : UIResponder <UIApplicationDelegate, CCBContextEventManagerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

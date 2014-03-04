@@ -20,10 +20,18 @@
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshCount) name:@"count_updated" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:@"data_updated" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleContextLifeCycleEvent:) name:CCHContextEventManagerDidCancelEvent object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleContextLifeCycleEvent:) name:CCHContextEventManagerDidDetectEvent object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleContextLifeCycleEvent:) name:CCHContextEventManagerWillPostEvent object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleContextLifeCycleEvent:) name:CCHContextEventManagerDidPostEvent object:nil];
 
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
+- (void)handleContextLifeCycleEvent:(NSNotification *)notification {
+    NSLog(@"NOTIFICATION: /n %@ %@", notification.name, notification.object);
+}
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
 }
@@ -52,7 +60,7 @@
 - (IBAction)pushMeTapped:(id)sender {
     NSDictionary *userInfo = @{ @"alert":self.messageField.text};
     
-    [[CCBNotificationService sharedService] sendAPNSNotificationToAliases:@[[CarbonBlack deviceId]] userInfo:userInfo withCompletion:^(NSError *error) {
+    [[CCHNotificationService sharedService] sendAPNSNotificationToAliases:@[[ContextHub deviceId]] userInfo:userInfo withCompletion:^(NSError *error) {
         NSLog(@"Error %@", error);
     }];
 }
@@ -61,7 +69,7 @@
 
     NSDictionary *userInfo = @{@"custom":self.customData.text, @"alert":@"Data was pushed!"};
     
-    [[CCBNotificationService sharedService] sendAPNSNotificationToAliases:@[[CarbonBlack deviceId]] userInfo:userInfo withCompletion:^(NSError *error) {
+    [[CCHNotificationService sharedService] sendAPNSNotificationToAliases:@[[ContextHub deviceId]] userInfo:userInfo withCompletion:^(NSError *error) {
         NSLog(@"Error %@", error);
     }];
 }
@@ -70,7 +78,7 @@
     
     NSDictionary *userInfo = @{@"sound":@"techno.aif", @"custom":self.customData.text, @"alert":@"CAN YOU HEAR ME NOW?", @"badge":@"1000"};
     
-    [[CCBNotificationService sharedService] sendAPNSNotificationToAliases:@[[CarbonBlack deviceId]] userInfo:userInfo withCompletion:^(NSError *error) {
+    [[CCHNotificationService sharedService] sendAPNSNotificationToAliases:@[[ContextHub deviceId]] userInfo:userInfo withCompletion:^(NSError *error) {
         NSLog(@"Error %@", error);
     }];
 }
@@ -78,7 +86,7 @@
 - (IBAction)pushMeSilentTapped:(id)sender {
     NSDictionary *userInfo = @{@"content-available":@"1", @"sound":@"", @"custom":self.customData.text, @"alert":@""};
 
-    [[CCBNotificationService sharedService] sendAPNSNotificationToAliases:@[[CarbonBlack deviceId]] userInfo:userInfo withCompletion:^(NSError *error) {
+    [[CCHNotificationService sharedService] sendAPNSNotificationToAliases:@[[ContextHub deviceId]] userInfo:userInfo withCompletion:^(NSError *error) {
         NSLog(@"Error %@", error);
     }];
 }

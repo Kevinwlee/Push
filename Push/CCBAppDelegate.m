@@ -8,11 +8,13 @@
 
 #import "CCBAppDelegate.h"
 
-@implementation CCBAppDelegate
+
+@implementation CCBAppDelegate 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [CarbonBlack registerWithAppId:@"49f76a62-013a-4bfb-870d-ed04d040254e"];
+    [ContextHub registerWithAppId:@"49f76a62-013a-4bfb-870d-ed04d040254e"];
+
     [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound ];
 
     if (application.backgroundRefreshStatus == UIBackgroundRefreshStatusAvailable) {
@@ -20,6 +22,9 @@
     }
     
     NSLog(@"Launch Options %@", launchOptions);
+    
+    [[CCHContextEventManager sharedManager] setDelegate:self];
+    
     return YES;
 }
 
@@ -28,8 +33,8 @@
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    CCBNotificationService *sharedService = [CCBNotificationService sharedService];
-	NSString *deviceID = [CarbonBlack deviceId];
+    CCHNotificationService *sharedService = [CCHNotificationService sharedService];
+	NSString *deviceID = [ContextHub deviceId];
 	
     [sharedService registerDeviceToken:deviceToken withAlias:deviceID withCompletion:^(NSError *error) {
         if(error) {
@@ -46,10 +51,18 @@
 
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    NSLog(@"Did receive remote notification! %@", userInfo);
-    [self updateCounter];
-    [self handleCustomData:userInfo];
-    completionHandler(UIBackgroundFetchResultNoData);
+    
+    NSLog(@"DEBUG: Did receive remote notification! %@", userInfo);
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:42];
+    [ContextHub application:application didReceiveRemoteNotification:userInfo completion:^(UIBackgroundFetchResult backgroundFetchResult) {
+        [self updateCounter];
+        [self handleCustomData:userInfo];
+
+        NSLog(@"DEBUG: Completed background handler");
+        completionHandler(UIBackgroundFetchResultNoData);
+    }];
+    
+    
 }
 
 - (void)updateCounter {
@@ -90,6 +103,12 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (BOOL)contextEventManager:(CCHContextEventManager *)eventManager
+            shouldPostEvent:(NSDictionary *)event {
+    NSLog(@"event %@", event);
+    return YES;
 }
 
 @end

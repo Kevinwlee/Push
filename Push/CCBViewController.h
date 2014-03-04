@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CCBNotificationService.h"
-#import "CarbonBlack.h"
+#import "CCHNotificationService.h"
+#import "ContextHub.h"
+#import "CCHContextEventManager.h"
+
 @interface CCBViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *backgroundCount;
 @property (weak, nonatomic) IBOutlet UILabel *customLabel;

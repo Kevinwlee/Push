@@ -8,37 +8,31 @@
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>3</integer>
 		</dict>
 		<key>Pods-CarbonBlack.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>4</integer>
 		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>2</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>091E8DB885924E449F679B30</key>
+		<key>7F1BCD470F6943268B465A73</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BD6321F3DC2F425D8FC4D2F0</key>
+		<key>86A102F85CD0478483712706</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>ED14812E43A441D28F4C0CFA</key>
+		<key>D6F9163E3B9349FCAF0F26EF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
